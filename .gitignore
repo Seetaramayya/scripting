@@ -1,0 +1,11 @@
+# Idea related
+.idea
+*.iml
+
+# My habbits
+*.bkp
+*.bak
+*.seeta
+
+# Mac files
+.DS_Store
