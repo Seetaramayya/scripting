@@ -5,9 +5,9 @@
 
 # Topics
 
-- [History](./history.md)
-- [Basic Commands](./basic-commands.md)
-- [Bash script basics](./bash.md)
+- [History](./linkedin-tutorial/history.md)
+- [Basic Commands](./linkedin-tutorial/basic-commands.md)
+- [Bash script basics](./linkedin-tutorial/bash.md)
 - `aws.sh` contains `aws cli` and `jq` examples 
 
 
