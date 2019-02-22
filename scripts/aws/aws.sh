@@ -2,7 +2,7 @@
 
 force=""
 CACHE_DIR=$HOME/.aws/.cache/
-
+LINE="====================================================================="
 while getopts "f" arg ; do
   case $arg in
     f)
@@ -15,7 +15,7 @@ shift $(expr $OPTIND - 1)
 
 function cleanCacheIfRequired {
   local filename=$1
-  [[ "x$force" != "x" && -f ${filename} ]] && echo "Deleting cache file '$filename'" && rm ${filename}
+  [[ "x$force" != "x" && -f ${filename} ]] && printf "${LINE}\nDeleting cache file '$filename'" && rm ${filename} && printf "\nDeletion is completed\n${LINE}\n"
 }
 
 function stack {
@@ -33,10 +33,9 @@ function stack {
   # https://stedolan.github.io/jq/manual/
   cat ${filename} | jq --arg v "$stackname" -rc '.AutoScalingGroups[] | {name : .AutoScalingGroupName} | select(.name | contains($v)) | .name' | while read i; do
     echo "Autoscaling group name is : '$i'"
-    echo
     aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name $i | jq -rc '.AutoScalingGroups[].Instances[].InstanceId' | while read instanceId; do
       aws ec2 describe-instances --instance-ids $instanceId | jq -r '.Reservations[] | .Instances[].NetworkInterfaces[].PrivateIpAddress' | while read ip; do
-        echo "$instanceId: $ip"
+        printf "\t$instanceId: $ip\n"
       done
     done
   done
